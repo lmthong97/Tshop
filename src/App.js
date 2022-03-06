@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import Contact from 'features/Contact';
+import HomePage from 'features/HomePage';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import './App.css';
-
+import Header from './components/Header';
+import NotFound from './components/NotFound';
+import Product from './features/Product';
+// const theme = createTheme();
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        // <ThemeProvider theme={theme}>
+        <div className="App">
+            <BrowserRouter>
+                <Header />
+
+                <Switch>
+                    <Redirect from="/home" to="/" exact />
+
+                    <Route path="/" component={HomePage} exact />
+                    <Route path="/products" component={Product} />
+                    <Route path="/contact" component={Contact} />
+
+                    <Route component={NotFound} />
+                </Switch>
+            </BrowserRouter>
+        </div>
+        // </ThemeProvider>
+    );
 }
 
 export default App;
