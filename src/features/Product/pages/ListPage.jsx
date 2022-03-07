@@ -2,10 +2,15 @@ import { Box, Container, Grid, Pagination, Paper } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import productApi from 'api/productApi';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import queryString from 'query-string'
+
+import FilterViewer from '../components/FilterViewer';
 import ProductFilters from '../components/ProductFilters';
 import ProductList from '../components/ProductList';
 import ProductSkeletonList from '../components/ProductSkeletonList';
 import ProductSort from '../components/ProductSort';
+import { useLocation } from 'react-router-dom';
 
 ListPage.propTypes = {
     
@@ -36,6 +41,11 @@ pagination: {
 
 function ListPage(props) {
     const classes = useStyles();
+
+    const history = useHistory()
+    const location = useLocation()
+    const queryParams = queryString.parse(location.search)
+
     const [productList, setProductList] = useState([]);
     const [pagination, setPagination] = useState({
         limit: 9,
@@ -44,12 +54,22 @@ function ListPage(props) {
     })
     const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState({
-        _page:1, 
-        _limit: 9,
-        _sort:'updated_at:DESC'
+        ...queryParams,
+        _page: Number.parseInt(queryParams._page) || 1, 
+        _limit: Number.parseInt(queryParams._limit) || 9,
+        _sort: queryParams._sort ||'updated_at:DESC'
 
     });
+    
 
+
+    useEffect(() => {
+        
+        history.push({
+            pathname: history.location.pathname,
+            search: queryString.stringify(filters)
+        })
+    }, [history ,filters]);
 
     useEffect(() => {
         (async () => {
@@ -90,6 +110,9 @@ function ListPage(props) {
         }))
     }
 
+    const setNewFilters = (newFilters) => {
+        setFilters(newFilters)
+    }
 
     return (
         <Box>
@@ -102,7 +125,8 @@ function ListPage(props) {
                     </Grid>
                     <Grid item className={classes.right} xs={12} sm={8} lg={10}>
                         <Paper elevation={0} >
-                        <ProductSort currentSort={filters._sort} onChange={handleSortChange}/>
+                            <ProductSort currentSort={filters._sort} onChange={handleSortChange}/>
+                            <FilterViewer filters={filters} onChange={setNewFilters}/>
 
                             {loading ? <ProductSkeletonList/> : <ProductList data={productList}/>}
                             <Box className={classes.pagination}>

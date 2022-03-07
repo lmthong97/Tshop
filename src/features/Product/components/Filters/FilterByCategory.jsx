@@ -27,12 +27,12 @@ const useStyles = makeStyles({
 })
 FilterByCategory.propTypes = {
     onChange: PropTypes.func,
+    listCategory: PropTypes.array,
 };
 
 function FilterByCategory({onChange}) {
-    const [categoryList, setCategoryList] = useState([])
     const classes = useStyles()
-
+    const [categoryList, setCategoryList] = useState([])
     useEffect(() => {
        (async () => {
            try {
@@ -46,6 +46,8 @@ function FilterByCategory({onChange}) {
            }
        })()
     }, []);
+
+
 
     const handleCategoryClick = (category) =>{
         if(onChange) onChange(category.id)

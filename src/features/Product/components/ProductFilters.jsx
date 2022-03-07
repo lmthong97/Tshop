@@ -23,10 +23,11 @@ function ProductFilters({filters, onChange}) {
         if(onChange){
             onChange(values)
         }
+        console.log(values)
     }
     return (
         <Box>
-            <FilterByCategory onChange={handleCategoryChange}/>
+            <FilterByCategory  onChange={handleCategoryChange}/>
             <FilterByPrice onChange={handleChange}/>
             <FilterByService filters={filters} onChange={handleChange}/>
         </Box>
