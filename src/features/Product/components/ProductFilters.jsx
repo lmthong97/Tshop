@@ -23,7 +23,6 @@ function ProductFilters({filters, onChange}) {
         if(onChange){
             onChange(values)
         }
-        console.log(values)
     }
     return (
         <Box>
