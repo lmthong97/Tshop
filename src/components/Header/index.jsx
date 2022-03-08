@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import { AccountCircle, Close } from '@material-ui/icons';
 import { ShoppingCart } from '@mui/icons-material';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import { Badge, IconButton, Menu, MenuItem } from '@mui/material';
+import { Badge, Container, createTheme, IconButton, Menu, MenuItem } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -18,15 +18,19 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
+import MenuIcon from '@mui/icons-material/Menu';
 
-  
-
+const theme = createTheme()
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   appBar:{
     backgroundColor: '#1a94ff',
+  },
+  logo:{
+    textDecoration: "none",
+    color: theme.palette.grey[100],
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -35,8 +39,15 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   link: {
-    color: "#fff",
+    fontWeight: 'bold',
     textDecoration: "none",
+    color: theme.palette.primary.dark,
+  },
+  linkLg: {
+    fontWeight: 'bold',
+    textDecoration: "none",
+    color: theme.palette.grey[100],
+    marginLeft: theme.spacing(2),
   },
   closeBtn: {
     cursor: 'pointer',
@@ -96,49 +107,125 @@ export default function Header() {
   const handleCartClick = () => {
     history.push('/cart')
   }
-
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
   return (
     <Box className={classes.root} >
       <AppBar className={classes.appBar} position="static">
-        <Toolbar> 
-            <SettingsEthernetIcon className={classes.Icon} />
-          
-          <Typography variant="h6" className={classes.title}>
-            <Link to="/" className= {classes.link}>
-              T SHOP
-            </Link>
-          </Typography>
+        <Container maxWidth="xl">
+          <Toolbar> 
+            <Box sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
+              <SettingsEthernetIcon className={classes.Icon} />
+              <Typography variant="h6" noWrap className={classes.title}>
+              <Link to="/" className={classes.logo}>
+                T SHOP
+              </Link>
+              </Typography>
+            </Box>
+              
 
-          <NavLink to="/" className={classes.link}>
-            <Button color="inherit">Home</Button>
-          </NavLink>
+              <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', md: 'none' },
+                  }}
+                >
+                    <MenuItem  onClick={handleCloseNavMenu}>
+                      <NavLink to="/" className={classes.link}>
+                        Home
+                      </NavLink>
+                    </MenuItem>
+                    <MenuItem  onClick={handleCloseNavMenu}>
+                      <NavLink to="/products" className={classes.link}>
+                        Product
+                      </NavLink>
+                    </MenuItem>
+                    <MenuItem  onClick={handleCloseNavMenu}>
+                      <NavLink to="/contact" className={classes.link}>
+                        Contact
+                      </NavLink>
+                    </MenuItem>
+                  </Menu>
+                </Box>
+            
 
-          <NavLink to="/products" className={classes.link}>
-            <Button color="inherit">Product</Button>
-          </NavLink>
 
-          <NavLink to="/contact" className={classes.link}>
-            <Button color="inherit">Contact</Button>
-          </NavLink>
-            {!isLoggedIn &&(
-              <Button 
-                color="inherit" 
-                onClick={handleClickOpen}
-              >
-                Login
-              </Button>
-            )}
-            {isLoggedIn &&(
-              <IconButton color="inherit" onClick = {handleUserClick}>
-                <AccountCircle/>
-              </IconButton>
-            )}
-          <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleCartClick}>
-            <Badge badgeContent={cartItemsCount} color="error">
-              <ShoppingCart />
-            </Badge>
-           </IconButton>
-        </Toolbar>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'flex-end'}}>
+                <NavLink to="/" className={classes.linkLg}>
+                  <Button variant='text' sx={{color:theme.palette.grey[100]}}>
+                  Home
+                  </Button>
+                </NavLink>
+
+                <NavLink to="/products" className={classes.linkLg}>
+                  <Button variant='text' sx={{color:theme.palette.grey[100]}}>
+                  Product
+                  </Button>
+                </NavLink>
+
+                <NavLink to="/contact" className={classes.linkLg}>
+                  <Button variant='text' sx={{color:theme.palette.grey[100]}}>
+                  Contact
+                  </Button>
+                </NavLink>
+              </Box>
+             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+              <SettingsEthernetIcon className={classes.Icon} />
+              <Typography variant="h6" noWrap className={classes.title}>
+              <Link to="/" className={classes.logo}>
+                T SHOP
+              </Link>
+              </Typography>
+            </Box>
+              {!isLoggedIn &&(
+                <Button 
+                  color="inherit" 
+                  onClick={handleClickOpen}
+                >
+                  Login
+                </Button>
+              )}
+              {isLoggedIn &&(
+                <IconButton color="inherit" onClick = {handleUserClick}>
+                  <AccountCircle/>
+                </IconButton>
+              )}
+                <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleCartClick}>            
+              <Badge badgeContent={cartItemsCount} color="error">
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
+          </Toolbar>
+        
+        </Container>
       </AppBar>
 
       <Menu

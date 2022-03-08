@@ -17,7 +17,7 @@ function App() {
         <Switch>
           <Redirect from="/home" to="/" exact />
 
-          <Route path="/" component={HomePage} exact />
+          <Route path="/" component={Product} exact />
           <Route path="/products" component={Product} />
           <Route path="/cart" component={CartFeature} />
           <Route path="/contact" component={Contact} />
