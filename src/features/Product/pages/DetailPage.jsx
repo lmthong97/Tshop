@@ -1,6 +1,8 @@
 import { Box, Container, createTheme, Grid, LinearProgress, Paper } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { addToCart } from 'features/Cart/cartSlice';
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import AddToCartForm from '../components/AddToCartForm';
 import useProductDetail from '../components/hook/useProductDetail';
@@ -44,6 +46,8 @@ function DetailPage() {
 
     const {product, loading} = useProductDetail(productId)
 
+    const dispatch = useDispatch()
+
     if(loading) {
         return (<Box sx={{
             position:'fixed',
@@ -55,8 +59,14 @@ function DetailPage() {
         </Box>)
     }
 
-    const handleAddToCartSubmit = (formValue) => {
-        console.log('Form value: ', formValue)
+    const handleAddToCartSubmit = ({quantity}) => {
+        // console.log('Form value: ', formValue)
+        const action = addToCart({
+            id: product.id,
+            product,
+            quantity,
+        })
+        dispatch(action)
     }
     return (
         <Box className={classes.root}>

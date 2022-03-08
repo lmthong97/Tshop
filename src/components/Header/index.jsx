@@ -3,8 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { AccountCircle, Close } from '@material-ui/icons';
+import { ShoppingCart } from '@mui/icons-material';
 import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { Badge, IconButton, Menu, MenuItem } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -12,8 +13,10 @@ import { Box } from '@mui/system';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';
 import { logout } from 'features/Auth/userSlice';
+import { cartItemsCountSelector } from 'features/Cart/selectors';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 
   
@@ -51,7 +54,9 @@ const MODE = {
 };
 
 export default function Header() {
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  const history = useHistory()
 
   const loggedInUser = useSelector(state => state.user.current);
   const isLoggedIn = !!loggedInUser.id;
@@ -61,6 +66,8 @@ const dispatch = useDispatch();
 
   const [anchorEl, setAnchorEl] = useState(null);
   const openMenu = Boolean(anchorEl);
+
+  const cartItemsCount = useSelector(cartItemsCountSelector)
 
   const handleUserClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -85,6 +92,10 @@ const dispatch = useDispatch();
   // otherwise close current dialog
     setOpen(false);
   };
+
+  const handleCartClick = () => {
+    history.push('/cart')
+  }
 
   return (
     <Box className={classes.root} >
@@ -122,7 +133,11 @@ const dispatch = useDispatch();
                 <AccountCircle/>
               </IconButton>
             )}
-          
+          <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleCartClick}>
+            <Badge badgeContent={cartItemsCount} color="error">
+              <ShoppingCart />
+            </Badge>
+           </IconButton>
         </Toolbar>
       </AppBar>
 
@@ -146,6 +161,7 @@ const dispatch = useDispatch();
         <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
         <MenuItem onClick={handleCloseMenu}>My account</MenuItem>
         <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
+        
       </Menu>
 
       <Dialog 
