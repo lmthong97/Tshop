@@ -4,9 +4,9 @@ import { EMPTY_CART } from 'constants/index';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { cartTotalSelector } from './selectors';
 import { formatPrice } from 'utils';
-import ProductThumbnail from 'features/Product/components/ProductThumbnail';
+import ProductCart from './components/productCart';
+import { cartTotalSelector } from './selectors';
 
 
 const theme = createTheme()
@@ -42,14 +42,13 @@ product: {
 function CartFeature(props) {
     const classes = useStyles()
     const cartTotal= useSelector(cartTotalSelector)
+
     const procductsCart= useSelector(state => state.cart.cartItems)
-    console.log(!procductsCart.length)
+
+    console.log(procductsCart)
 
 
-
-    const handleRemoveCart = ()=>{
-        
-    }
+    
     return (
         <Box className={classes.root}>
             <Container>
@@ -77,16 +76,7 @@ function CartFeature(props) {
                             <Grid item className={classes.left} xs={12} md={8} sm={8} lg={8}>
                                 <Paper elevation={0} >
                                     {procductsCart.map(item=>(
-                                        <Box key={item.id} className={classes.product}>
-                                            <Box width="100px">
-                                                <ProductThumbnail product={item.product}/>
-                                            </Box>
-                                            <Typography variant="body2" minWidth='160px'>{item.product.name}</Typography>
-                                            <Typography variant="body2"minWidth='90px'>{formatPrice(item.product.salePrice)}</Typography>
-                                            <Typography variant="body2">{item.quantity}</Typography>
-                                            <Button variant="text" size="small" maxWidth='60px'>Delete</Button>
-
-                                        </Box>
+                                        <ProductCart key={item.id} productCart={item}/>
                                     ))}
                                 </Paper>
                             </Grid>
@@ -103,8 +93,8 @@ function CartFeature(props) {
                                     <Typography variant="h5">Tổng cộng: </Typography>
                                     <Typography variant="h6">{formatPrice(cartTotal)}</Typography>
                                     </Box>
-                                    <Button variant="contained" fullWidth marginBottom={theme.spacing(2)}
-                                    onClick={handleRemoveCart} >Thanh toán</Button>
+                                    <Button variant="contained" fullWidth sx={{marginBottom: theme.spacing(2)}}
+                                     >Thanh toán</Button>
                                     </Paper>
                                 </Box>
                             </Grid>
