@@ -15,7 +15,7 @@ import { makeStyles } from '@mui/styles';
 const theme = createTheme()
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1,
+    
   },
   appBar:{
     backgroundColor: '#1a94ff',
