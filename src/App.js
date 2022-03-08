@@ -1,11 +1,10 @@
 import Contact from 'features/Contact'
-import HomePage from 'features/HomePage'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header'
 import NotFound from './components/NotFound'
-import Product from './features/Product'
 import CartFeature from './features/Cart'
+import Product from './features/Product'
 // const theme = createTheme();
 function App() {
   return (
