@@ -16,7 +16,7 @@ import ProductThumbnail from '../components/ProductThumbnail';
 const theme = createTheme()
 const useStyles =makeStyles({
 root: {
-    paddingBottom: theme.spacing(4)
+    
 },
 
 left: {
@@ -69,7 +69,7 @@ function DetailPage() {
         dispatch(action)
     }
     return (
-        <Box className={classes.root}>
+        <Box sx={{paddingBottom: theme.spacing(4)}}>
             <Container>
                 <Paper elevation={0}>
                     <Grid container>

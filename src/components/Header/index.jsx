@@ -107,7 +107,7 @@ export default function Header() {
     setAnchorElNav(null);
   };
   return (
-    <Box className={classes.root} >
+    <Box  >
       <AppBar className={classes.appBar} position="static">
         <Container maxWidth="xl">
           <Toolbar> 
