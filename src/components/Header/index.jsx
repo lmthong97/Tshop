@@ -249,7 +249,7 @@ export default function Header() {
         onClose={handleClose}
       >
         <Box className={classes.closeBtn} onClick={handleClose}  >
-          <Close ></Close>
+          <Close />
         </Box>
 
         <DialogContent>

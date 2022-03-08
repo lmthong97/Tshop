@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Avatar, Button, LinearProgress, makeStyles, Typography } from '@material-ui/core';
-import { LockOutlined } from '@material-ui/icons';
+import { LockOutlined } from '@mui/icons-material';
+import { Avatar, Button, createTheme, LinearProgress, Typography } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import InputField from 'components/form-controls/InputField';
 import PasswordField from 'components/form-controls/PasswordField';
 import PropTypes from 'prop-types';
@@ -8,7 +9,8 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
-const useStyles = makeStyles((theme) => ({
+const theme = createTheme()
+const useStyles = makeStyles({
   root: {
     position: 'relative',
     paddingTop: theme.spacing(4),
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     right: 0,
   },
-}));
+});
 
 RegisterForm.propTypes = {
     onSubmit: PropTypes.func,
