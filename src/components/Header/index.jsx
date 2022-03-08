@@ -1,27 +1,19 @@
-import AppBar from '@material-ui/core/AppBar';
-import { makeStyles } from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { AccountCircle, Close } from '@material-ui/icons';
-import { ShoppingCart } from '@mui/icons-material';
-import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
-import { Badge, Container, createTheme, IconButton, Menu, MenuItem } from '@mui/material';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import { Box } from '@mui/system';
+import { AccountCircle, Close, ShoppingCart } from '@mui/icons-material';
+import { AppBar, Badge, Box, Button, Container, createTheme, Dialog, DialogContent, IconButton, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import Login from 'features/Auth/components/Login';
 import Register from 'features/Auth/components/Register';
 import { logout } from 'features/Auth/userSlice';
 import { cartItemsCountSelector } from 'features/Cart/selectors';
+import SettingsEthernetIcon from '@mui/icons-material/SettingsEthernet';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
+import { makeStyles } from '@mui/styles';
 
 const theme = createTheme()
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
     flexGrow: 1,
   },
@@ -57,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#9e9e9e',
     zIndex: 1,
   }
-}));
+});
 
 const MODE = {
   LOGIN: 'login',
