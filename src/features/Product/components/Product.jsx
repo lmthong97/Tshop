@@ -22,7 +22,7 @@ function Product({product}) {
     return (
         <Box padding={1} onClick={handleClick}>
             <Box padding={1} >
-                <Box display="flex" position="relative" width="100%" height="100%">
+                <Box  display="flex" position="relative" sx={{  minHeight: '170px'}}>
 
                 <img 
                     src={thumbnailUrl} 

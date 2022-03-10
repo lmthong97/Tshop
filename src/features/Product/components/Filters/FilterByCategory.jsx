@@ -3,6 +3,7 @@ import { makeStyles } from '@mui/styles';
 import categoryApi from 'api/categoryApi';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import CategorySkeletonList from '../CategorySkeletonList';
 const theme = createTheme();
 
 const useStyles = makeStyles({
@@ -31,6 +32,8 @@ FilterByCategory.propTypes = {
 };
 
 function FilterByCategory({onChange}) {
+    const [categoryLoading, setCategoryLoading] = useState(true);
+
     const classes = useStyles()
     const [categoryList, setCategoryList] = useState([])
     useEffect(() => {
@@ -41,9 +44,10 @@ function FilterByCategory({onChange}) {
                    id: x.id,
                    name: x.name,
                })))
-           } catch (error) {
-               console.log('Failed to fetch category list')
-           }
+            } catch (error) {
+                console.log('Failed to fetch category list')
+            }
+            setCategoryLoading(false);
        })()
     }, []);
 
@@ -55,15 +59,18 @@ function FilterByCategory({onChange}) {
     return (
         <Box className={classes.root} theme={theme}>
             <Typography variant="subtitle2">DANH MỤC SẢN PHẨM</Typography>
-            <ul className={classes.menu}>
-                {categoryList.map(category => 
+                {categoryLoading 
+                    ? <CategorySkeletonList /> 
+                    : <ul className={classes.menu}>
+                        {categoryList.map(category => 
                     <li key={category.id} onClick={()=>handleCategoryClick(category)}>
                         <Typography variant="body2">
                             {category.name}
                         </Typography>
                      </li>
                 )}
-            </ul>
+                    </ul>
+                }
         </Box>
     );
 }

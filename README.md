@@ -9,3 +9,10 @@ Box (full section)
             |__ ProductSortOptions
             |__ ProductList
             |__ Pagination -->
+<!--
+-Loading API product list page
+-skeleton category
+Cart render
+|__ cart checkout add address(add to redux) delete
+|
+|__ payment render cart, select payment-->

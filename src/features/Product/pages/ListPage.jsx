@@ -1,7 +1,7 @@
-import { Box, Container, Grid, Pagination, Paper } from '@mui/material';
+import { Box, Container, Grid, LinearProgress, Pagination, Paper } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import productApi from 'api/productApi';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { Fragment, useEffect, useMemo, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string'
 
@@ -81,6 +81,7 @@ function ListPage(props) {
     //         search: queryString.stringify(filters)
     //     })
     // }, [history ,filters]);
+    
 
     useEffect(() => {
         (async () => {
@@ -148,6 +149,7 @@ function ListPage(props) {
             search: queryString.stringify(filters)
         })
     }
+    
 
     const setNewFilters = (newFilters) => {
         history.push({
@@ -170,7 +172,23 @@ function ListPage(props) {
                             <ProductSort currentSort={queryParams._sort} onChange={handleSortChange}/>
                             <FilterViewer filters={queryParams} onChange={setNewFilters}/>
 
-                            {loading ? <ProductSkeletonList/> : <ProductList data={productList}/>}
+                            {loading 
+                            ? 
+                            <Fragment>
+                                <Box sx={{
+                                    position:'fixed',
+                                    top:0,
+                                    left:0,
+                                    width:'100%',
+                                }}>
+                                    <LinearProgress/>
+                                </Box>)
+                                <ProductSkeletonList/>
+                            </Fragment>
+                            : 
+                            <ProductList data={productList}/>
+                            }
+
                             <Box className={classes.pagination}>
                                 <Pagination 
                                     
