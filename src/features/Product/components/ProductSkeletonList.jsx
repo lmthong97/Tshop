@@ -13,7 +13,6 @@ ProductSkeletonList.defaultProps = {
 function ProductSkeletonList({ length }) {
     
     const listSkeleton = Array.from(new Array(length))
-    console.log("loading")
     return (
         <Box>
             <Grid container>

@@ -1,4 +1,4 @@
-import { Box, Button, createTheme, Typography } from '@mui/material';
+import { Box, Button, createTheme, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@mui/material';
 import ProductThumbnail from 'features/Product/components/ProductThumbnail';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,7 +13,18 @@ ProductCart.propTypes = {
 
 function ProductCart({productCart}) {
     const dispatch = useDispatch()
+    const [open, setOpen] = React.useState(false);
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (e, reason) => {
+        if (reason === 'backdropClick') return;
+        
+        // otherwise close current dialog
+        setOpen(false);
+     };
 
     const handleRemoveCart = ()=>{
         //  console.log('Form value: ', productCart)
@@ -37,8 +48,28 @@ function ProductCart({productCart}) {
             <Typography variant="body2" minWidth='160px'>{productCart.product.name}</Typography>
             <Typography variant="body2"minWidth='90px'>{formatPrice(productCart.product.salePrice)}</Typography>
             <Typography variant="body2">{productCart.quantity}</Typography>
-            <Button variant="text" size="small"  onClick={handleRemoveCart}>Delete</Button>
-
+            <Button variant="text" size="small"  onClick={handleClickOpen}>Delete</Button>
+             <Dialog
+                disableEscapeKeyDown 
+                open={open}
+                onClose={handleClose}
+              
+            >
+                <DialogTitle >
+                {"Xóa Sản Phẩm"}
+                </DialogTitle>
+                <DialogContent>
+                <DialogContentText >
+                    Bạn có muốn xóa sản phẩm đang chọn?
+                </DialogContentText>
+                </DialogContent>
+                <DialogActions sx={{marginBottom: theme.spacing(1)}} >
+                <Button variant="outlined" onClick={handleRemoveCart} autoFocus>
+                    Xác Nhận
+                </Button>
+                <Button variant='contained' onClick={handleClose}>Hủy</Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     );
 }
