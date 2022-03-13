@@ -1,7 +1,8 @@
 import { Box, Button, Container, createTheme, Dialog, DialogContent, DialogTitle, Grid, Paper, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import StorageKeys from 'constants/storage-keys';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { formatPrice } from 'utils';
 import AddressComponent from './components/AddressComponent';
@@ -9,7 +10,6 @@ import AddressForm from './components/AddressForm';
 import EmptyCart from './components/EmptyCart';
 import ProductCart from './components/productCart';
 import { cartTotalSelector } from './selectors';
-import StorageKeys from 'constants/storage-keys';
 
 
 
@@ -45,8 +45,11 @@ function CartFeature(props) {
     const cartTotal= useSelector(cartTotalSelector)
 
     const procductsCart= useSelector(state => state.cart.cartItems)
-    const [address, setAddress] = useState({});
-    const [isAddress, setIsAddress]= useState(false);
+    const [address, setAddress] = useState(() => {
+        const storageAddress = JSON.parse(localStorage.getItem(StorageKeys.ADDRESS))
+        console.log(storageAddress)
+        return storageAddress
+    });
 
     const [open, setOpen] = React.useState(false);
     const {enqueueSnackbar} = useSnackbar();
@@ -54,7 +57,7 @@ function CartFeature(props) {
     const handleClickOpen = () => {
         setOpen(true);
     };
-
+    
     const handleClose = (e, reason) => {
         if (reason === 'backdropClick') return;
         
@@ -64,28 +67,42 @@ function CartFeature(props) {
 
     // console.log(procductsCart)
 
+    // useEffect(() => {
+    //     (async () =>{
+    //         try {
+    //            const address = await JSON.parse(localStorage.getItem(StorageKeys.ADDRESS))
+    //            setAddress(address)
+    //         } catch (error) {
+    //             console.log('Failed  to fetch address', error)
+    //         }
+    //     })()
+    // },[])
+
     const handleSubmitForm = (value) => {
-        localStorage.setItem(StorageKeys.ADDRESS, JSON.stringify(value) );
+        
 
         enqueueSnackbar('Thêm địa chỉ thành công ', {variant: 'success'})
+        setAddress(()=>{
+            localStorage.setItem(StorageKeys.ADDRESS, JSON.stringify(value) )
+            return value
+        });
         setOpen(false);
-        setIsAddress(true);
+        
     }
     
 
     // check address in localStorage
-    useEffect(() => {
-        const address = ()=> {
-            setAddress(JSON.parse(localStorage.getItem(StorageKeys.ADDRESS)))
-        }
-        address()
-    },[isAddress])
+    
+    
     
     
     const handleRemoveAddress = () => {
         localStorage.removeItem(StorageKeys.ADDRESS)
         enqueueSnackbar('Địa chỉ đã xóa ', {variant: 'warning'})
-        setIsAddress(false);
+        setAddress(()=>{
+            const storageAddress = JSON.parse(localStorage.getItem(StorageKeys.ADDRESS))
+            return storageAddress
+        });
 
     }
     const handleBuy = () => {
@@ -148,7 +165,7 @@ function CartFeature(props) {
                                     <Button 
                                         variant="contained" 
                                         fullWidth sx={{margin: theme.spacing(2,0)}} 
-                                        disabled={!isAddress}
+                                        disabled={!Boolean(address)}
                                         onClick={handleBuy}
                                      >Mua Hàng ({procductsCart.length})</Button>
                                 </Box>

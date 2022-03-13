@@ -18,6 +18,7 @@ AddressComponent.propTypes = {
 
 function AddressComponent({handleClick, data,handleRemoveAddress}) {
     const classes = useStyles()
+   
     return (
         <Box className={classes.root}>
              <Paper elevation={0} sx={{padding:theme.spacing(1)}}>
