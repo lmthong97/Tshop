@@ -44,6 +44,7 @@ export const cartSlice = createSlice({
     },
     checkoutOrder(state, action) {
       state.orderList = {}
+      state.cartItems = []
     },
   },
 })

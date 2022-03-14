@@ -22,7 +22,7 @@ function InputField(props) {
       control={control}
       render={({ field: { onChange, onBlur, value, name }, fieldState: { invalid, error } }) => (
         <TextField
-          margin="normal"
+          margin='dense'
           variant="outlined"
           fullWidth
           label={label}
