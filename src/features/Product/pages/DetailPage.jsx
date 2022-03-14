@@ -1,6 +1,7 @@
 import { Box, Container, createTheme, Grid, LinearProgress, Paper } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { addToCart } from 'features/Cart/cartSlice';
+import { useSnackbar } from 'notistack';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
@@ -48,6 +49,9 @@ function DetailPage() {
 
     const dispatch = useDispatch()
 
+    const {enqueueSnackbar} = useSnackbar();
+
+
     if(loading) {
         return (<Box sx={{
             position:'fixed',
@@ -67,6 +71,7 @@ function DetailPage() {
             quantity,
         })
         dispatch(action)
+        enqueueSnackbar(`Sản phẩm đã được thêm vào giỏ hàng`, {variant: 'success'})
     }
     return (
         <Box sx={{paddingBottom: theme.spacing(4)}}>
