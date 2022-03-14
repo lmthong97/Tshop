@@ -5,6 +5,7 @@ export const cartSlice = createSlice({
   initialState: {
     showMiniCart: false,
     cartItems: [],
+    orderList: {},
   },
   reducers: {
     showMiniCart(state) {
@@ -38,6 +39,12 @@ export const cartSlice = createSlice({
 
       state.cartItems = state.cartItems.filter((x) => x.id !== idNeedToRemove)
     },
+    setOrderList(state, action) {
+      state.orderList = action.payload
+    },
+    checkoutOrder(state, action) {
+      state.orderList = {}
+    },
   },
 })
 
@@ -48,6 +55,8 @@ export const {
   addToCart,
   removeFromCart,
   setQuantity,
+  setOrderList,
+  checkoutOrder,
 } = actions
 
 export default reducer

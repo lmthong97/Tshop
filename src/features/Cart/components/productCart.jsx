@@ -9,9 +9,10 @@ import { removeFromCart } from '../cartSlice';
 const theme = createTheme()
 ProductCart.propTypes = {
     productCart: PropTypes.object,
+    url: PropTypes.string,
 };
 
-function ProductCart({productCart}) {
+function ProductCart({productCart, url=''}) {
     const dispatch = useDispatch()
     const [open, setOpen] = React.useState(false);
 
@@ -48,28 +49,33 @@ function ProductCart({productCart}) {
             <Typography variant="body2" minWidth='160px'>{productCart.product.name}</Typography>
             <Typography variant="body2"minWidth='90px'>{formatPrice(productCart.product.salePrice)}</Typography>
             <Typography variant="body2">{productCart.quantity}</Typography>
-            <Button variant="text" size="small"  onClick={handleClickOpen}>Delete</Button>
-             <Dialog
-                disableEscapeKeyDown 
-                open={open}
-                onClose={handleClose}
-              
-            >
-                <DialogTitle >
-                {"Xóa Sản Phẩm"}
-                </DialogTitle>
-                <DialogContent>
-                <DialogContentText >
-                    Bạn có muốn xóa sản phẩm đang chọn?
-                </DialogContentText>
-                </DialogContent>
-                <DialogActions sx={{marginBottom: theme.spacing(1)}} >
-                <Button variant="outlined" onClick={handleRemoveCart} autoFocus>
-                    Xác Nhận
-                </Button>
-                <Button variant='contained' onClick={handleClose}>Hủy</Button>
-                </DialogActions>
-            </Dialog>
+            { !url
+            ? <>
+                <Button variant="text" size="small"  onClick={handleClickOpen}>Delete</Button>
+                <Dialog
+                    disableEscapeKeyDown 
+                    open={open}
+                    onClose={handleClose}
+                
+                >
+                    <DialogTitle >
+                    {"Xóa Sản Phẩm"}
+                    </DialogTitle>
+                    <DialogContent>
+                    <DialogContentText >
+                        Bạn có muốn xóa sản phẩm đang chọn?
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions sx={{marginBottom: theme.spacing(1)}} >
+                    <Button variant="outlined" onClick={handleRemoveCart} autoFocus>
+                        Xác Nhận
+                    </Button>
+                    <Button variant='contained' onClick={handleClose}>Hủy</Button>
+                    </DialogActions>
+                </Dialog>
+            </>
+            : <></>
+            }
         </Box>
     );
 }

@@ -14,9 +14,10 @@ AddressComponent.propTypes = {
     handleClick: PropTypes.func,
     handleRemoveAddress: PropTypes.func,
     data: PropTypes.object,
+    url: PropTypes.string,
 };
 
-function AddressComponent({handleClick, data,handleRemoveAddress}) {
+function AddressComponent({handleClick, data,handleRemoveAddress, url=''}) {
     const classes = useStyles()
    
     return (
@@ -31,14 +32,18 @@ function AddressComponent({handleClick, data,handleRemoveAddress}) {
                 }}>
 
                     <Typography variant="body1" paddingBottom={theme.spacing(1)}>Giao tới</Typography>
-                    <Box>
-                    <Button variant="text" size="small"  onClick={handleClick}>{Boolean(data)? 'Sửa địa chỉ' : 'Thêm địa chỉ'} </Button>
-                    {Boolean(data)? <Button variant="text" size="small"  onClick={handleRemoveAddress}>Xóa </Button> : <></>}
+                    {!url   
+                        ?
+                        <Box>
+                        <Button variant="text" size="small"  onClick={handleClick}>{Boolean(data)? 'Sửa địa chỉ' : 'Thêm địa chỉ'} </Button>
+                        {Boolean(data)? <Button variant="text" size="small"  onClick={handleRemoveAddress}>Xóa </Button> : <></>}
                     
-                    </Box>
+                        </Box>
+                    :<></>
+                    } 
                 </Box>
 
-            {Boolean(data)
+            {Boolean(data) 
                 ?<>
                 <Box
                     sx={{
