@@ -4,6 +4,7 @@ import { makeStyles } from '@mui/styles';
 import { T_SHOP_IMG } from 'constants/index';
 import { useSnackbar } from 'notistack';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import ContactForm from './components/ContactForm';
 
 const theme= createTheme()
@@ -32,6 +33,8 @@ function Contact(props) {
     const [loading, setLoading] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
+    const history = useHistory()
+
     const {enqueueSnackbar} = useSnackbar();
 
 
@@ -45,6 +48,9 @@ function Contact(props) {
            setLoading(false);
            enqueueSnackbar(`Gửi thành công`, {variant: 'success'})
         }, 3000);
+    }
+    const handleDone = ()=> {
+        history.push('/')
     }
     return (
         <Box>
@@ -72,8 +78,8 @@ function Contact(props) {
                                 <CheckCircleIcon color="primary" sx={{ fontSize: 100, margin: theme.spacing(2, 0) }} />
                                 <Typography variant="h5"> Thank you! </Typography>
                                 <Typography> Tin nhắn của bạn đã gửi. Chúng tôi sẽ phản hồi bạn trong 24 giờ. </Typography>
-                                <Button variant='contained' sx={{ marginTop: theme.spacing(2)}}>
-                                    Done
+                                <Button onClick={handleDone} variant='contained' sx={{ marginTop: theme.spacing(2)}}>
+                                    Xong
                                 </Button>
                             
                                 </>
