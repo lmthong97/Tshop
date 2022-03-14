@@ -90,7 +90,7 @@ function Payment(props) {
         const action = checkoutOrder()
         dispatch(action)
         console.log(orderDetails)
-        enqueueSnackbar(`Đặt hàng thành công`, {variant: 'success'})
+        enqueueSnackbar(`Đặt hàng thành công. Đơn hàng đang được xử lí. Cảm ơn quý khách đã mua hàng tại Tshop `, {variant: 'success'})
         history.push('/')
     }
 
