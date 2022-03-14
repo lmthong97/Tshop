@@ -1,3 +1,4 @@
+import Footer from 'components/Footer'
 import Contact from 'features/Contact'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import './App.css'
@@ -23,6 +24,7 @@ function App() {
 
           <Route component={NotFound} />
         </Switch>
+        <Footer />
       </BrowserRouter>
     </div>
     // </ThemeProvider>
