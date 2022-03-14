@@ -58,7 +58,7 @@ function Contact(props) {
 
                 <Typography variant="h5" sx={{margin: theme.spacing(1)}}>Contact Us</Typography>
                 <Grid container marginTop={theme.spacing(2)} spacing={1}>
-                    <Grid item xs={12} md={6} sm={6} lg={6}>
+                    <Grid item xs={12} md={12} sm={6} lg={6}>
                         <Box>
                              <Paper elevation={0}>
 
@@ -69,7 +69,7 @@ function Contact(props) {
                         </Box>
                     </Grid>
                
-                    <Grid item xs={12} md={6} sm={6} lg={6} >
+                    <Grid item xs={12} md={12} sm={6} lg={6} >
                         <Box height='100%'>
                             <Paper elevation={0} className={classes.rightPaper}> 
                             
